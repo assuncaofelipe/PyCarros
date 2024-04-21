@@ -34,3 +34,27 @@ class CarModelForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = '__all__'
+
+    ## sempre que for fazer uma validação, é importante add o clean_ antes do campo a ser validade
+    ## aqui está sendo validado o campo valueCar
+    ## clean_valueCar valida que o carro apenas pode ser adicionado com valor acima de 14999
+    ## em seguida, todas as outras funções validam os demais campos   
+    def clean_valueCar(self):
+        value = self.cleaned_data.get('valueCar')
+        if value < 14999:
+            self.add_error('valueCar', 'Valor mínimo do carro deve ser de R$ 14.999')
+        return value
+    
+    def clean_factory_year(self):
+        factory_year = self.cleaned_data.get('factory_year')
+        if factory_year < 1975:
+            self.add_error('factory_year', 'Não aceitamos carros com ano de fabricação menor que 1975')
+        return factory_year
+    
+    def clean_modelCar_year(self):
+        factory_year = self.cleaned_data.get('factory_year')
+        modelCar_year = self.cleaned_data.get('modelCar_year')
+
+        if modelCar_year <= factory_year:
+            self.add_error('modelCar_year', 'o Ano de modelo deve ser superior ao ano de frabricação')
+        return modelCar_year
