@@ -1,6 +1,9 @@
 from django import forms
 from cars.models import BrandsCar, Car
 
+## CONFIGURANDO O FORMS DE FORMA MANUAL
+## AQUI ESTÁ SENDO SETADO CAMPO POR CAMPO
+### ESSE TRECHO DE CÓDIGO NÃO ESTÁ SENDO USADO, É APENAS DEMOSTRATIVO
 class CarForm(forms.Form):
     modelCar = forms.CharField(max_length=200)
     brand = forms.ModelChoiceField(BrandsCar.objects.all())
@@ -22,3 +25,12 @@ class CarForm(forms.Form):
         )
         car.save()
         return car
+
+## CONFIGURANDO O MODEL FORMS
+## ELE CONFIGURA O FORMS USANDO AS CONFIGURAÇÕES DO MODEL CAR
+## NO MODEL FORMS NÃO É PRECISO ESCREVER O MÉTODO SAVE()
+## O MÉTODO SAVE() É NATIVO DO MODEL FORMS, LOGO ELE JÁ ESTÁ CONFIGURADO
+class CarModelForm(forms.ModelForm):
+    class Meta:
+        model = Car
+        fields = '__all__'
