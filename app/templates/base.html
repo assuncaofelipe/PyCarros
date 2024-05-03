@@ -1,89 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{% endblock %}</title>
-  <style>
-    body {
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        PyCarros Django Master
+      {% endblock %}
+    </title>
+    <style>
+      body {
         font-family: 'Open Sans', sans-serif;
         background-color: #f7f7f7;
         color: #333;
         margin: 0;
         padding: 0;
-    }
-
-    header {
+        overflow-y: auto;
+        margin-bottom: 60px;
+      }
+      
+      header {
         background-color: #0096c7;
         color: #fff;
         text-align: center;
-    }
-
-    footer {
+      }
+      
+      footer {
         background-color: #ccc;
         color: #333;
-        padding: 20px;
         text-align: center;
-    }
-
-    nav {
+        bottom: 0;
+        margin-bottom: 0;
+        position: fixed;
+        width: 100%;
+        height: 40px;
+      }
+      
+      nav {
         background-color: #0096c7;
         color: #fff;
         height: 50px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-
-    nav ul {
+      }
+      
+      nav ul {
         list-style: none;
         margin: 0;
         padding: 0;
         display: flex;
-    }
-
-    nav ul li {
+      }
+      
+      nav ul li {
         margin: 0 10px;
-    }
-
-    nav ul li a {
+      }
+      
+      nav ul li a {
         color: #fff;
         text-decoration: none;
         font-size: 16px;
         padding: 15px;
         transition: all 0.3s ease;
-    }
-
-    nav ul li a:hover {
+      }
+      
+      nav ul li a:hover {
         background-color: #32bbe8;
-    }
-
-    nav ul li.active a {
+      }
+      
+      nav ul li.active a {
         background-color: #666;
-    }
-
-    nav ul li.active a:hover {
+      }
+      
+      nav ul li.active a:hover {
         background-color: #999;
-    }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          {% if user.is_authenticated %}
+            <li>
+              <h3>Olá, {{ user.username }}</h3>
+            </li>
+          {% endif %}
+        </ul>
 
-  </style>
-</head>
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="{% url 'cars_list' %}">Carros</a></li>
-      </ul>
-    </nav>
-  </header>
+        <ul>
+          <li>
+            <a href="{% url 'cars_list' %}">Listar carros</a>
+            {% if user.is_authenticated %}
+              <a href="{% url 'new_car' %}">Adicionar novo carro</a>
+              <a href="{% url 'logout' %}">Fazer logout</a>
+            {% else %}
+              <a href="{% url 'register' %}">Cadastrar-se</a>
+              <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+    </header>
 
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
+    <main>
+      {% block content %}
 
-  <footer>
-    <p>&copy; 2023 PyCars</p>
-  </footer>
-</body>
+      {% endblock %}
+    </main>
+
+    <footer>
+      <p>&copy; 2023 PyCars</p>
+    </footer>
+  </body>
 </html>
