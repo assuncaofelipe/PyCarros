@@ -17,10 +17,10 @@ class CarsListView(ListView):
 
     # realiza buscars no db
     def get_queryset(self):
-        queryset_Cars = super().get_queryset().order_by('modelCar')
+        queryset_Cars = super().get_queryset().order_by('model')
         search = self.request.GET.get('search')
         if search:
-            queryset_Cars = queryset_Cars.filter(Q(modelCar__icontains=search) | 
+            queryset_Cars = queryset_Cars.filter(Q(model__icontains=search) | 
                                                  Q(brand__name__icontains=search))
         return queryset_Cars
 

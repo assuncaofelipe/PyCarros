@@ -15,10 +15,10 @@ class Migration(migrations.Migration):
             name='Car',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('modelCar', models.CharField(max_length=200)),
+                ('model', models.CharField(max_length=200)),
                 ('brand', models.CharField(max_length=200)),
                 ('factory_year', models.IntegerField(blank=True, null=True)),
-                ('modelCar_year', models.IntegerField(blank=True, null=True)),
+                ('model_year', models.IntegerField(blank=True, null=True)),
                 ('valueCar', models.FloatField(blank=True, null=True)),
             ],
         ),

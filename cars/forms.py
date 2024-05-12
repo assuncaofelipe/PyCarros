@@ -5,20 +5,20 @@ from cars.models import BrandsCar, Car
 ## AQUI ESTÁ SENDO SETADO CAMPO POR CAMPO
 ### ESSE TRECHO DE CÓDIGO NÃO ESTÁ SENDO USADO, É APENAS DEMOSTRATIVO
 class CarForm(forms.Form):
-    modelCar = forms.CharField(max_length=200)
+    model = forms.CharField(max_length=200)
     brand = forms.ModelChoiceField(BrandsCar.objects.all())
     factory_year = forms.IntegerField()
-    modelCar_year = forms.IntegerField()
+    model_year = forms.IntegerField()
     plate = forms.CharField(max_length=10)
     valueCar = forms.FloatField()
     photo = forms.ImageField()
     
     def save(self):
         car = Car(
-            modelCar = self.cleaned_data['modelCar'],
+            model = self.cleaned_data['model'],
             brand = self.cleaned_data['brand'],
             factory_year = self.cleaned_data['factory_year'],
-            modelCar_year = self.cleaned_data['modelCar_year'],
+            model_year = self.cleaned_data['model_year'],
             plate = self.cleaned_data['plate'],
             valueCar = self.cleaned_data['valueCar'],
             photo = self.cleaned_data['photo'],
@@ -51,10 +51,10 @@ class CarModelForm(forms.ModelForm):
             self.add_error('factory_year', 'Não aceitamos carros com ano de fabricação menor que 1975')
         return factory_year
     
-    def clean_modelCar_year(self):
+    def clean_model_year(self):
         factory_year = self.cleaned_data.get('factory_year')
-        modelCar_year = self.cleaned_data.get('modelCar_year')
+        model_year = self.cleaned_data.get('model_year')
 
-        if modelCar_year <= factory_year:
-            self.add_error('modelCar_year', 'o Ano de modelo deve ser superior ao ano de frabricação')
-        return modelCar_year
+        if model_year <= factory_year:
+            self.add_error('model_year', 'o Ano de modelo deve ser superior ao ano de frabricação')
+        return model_year
